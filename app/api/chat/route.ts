@@ -70,34 +70,33 @@ Rispondi SOLO con JSON valido, senza altre spiegazioni.`;
     }
 
     // Genera una risposta personalizzata con Claude
-    const suggestionPrompt = `L'utente ha questa richiesta legale: "${message}"
+    const suggestionPrompt = `Richiesta legale dell'utente: "${message}"
 
-Ho identificato:
+Contesto identificato:
 - Tipo di causa: ${analysis.tipo_causa || 'non specificato'}
-- Specializzazione necessaria: ${analysis.specializzazione_necessaria || 'non specificata'}
+- Area legale: ${analysis.specializzazione_necessaria || 'non specificata'}
 - Urgenza: ${analysis.urgenza || 'media'}
 
-ISTRUZIONI:
-Scrivi una risposta breve (100-150 parole) che:
+COMPITO:
+Scrivi una risposta di 80-120 parole che:
+1. Riconosce empaticamente la situazione
+2. Spiega brevemente l'area legale coinvolta
+3. Suggerisci 2-3 azioni pratiche immediate (documenti da raccogliere, aspetti da verificare)
+4. Concludi: "Per assistenza professionale su questo caso, contatta direttamente l'avvocato tramite i contatti indicati sotto."
 
-1. Riconosce il problema dell'utente con empatia
-2. Spiega in 1-2 frasi il tipo di questione legale
-3. Fornisci 2-3 consigli pratici immediati (es. "Raccogli: certificati, documenti, contratti" oppure "Verifica se hai: testimoni, foto, email rilevanti")
-4. Concludi con: "Per ricevere assistenza legale professionale su questo caso, ti consiglio di contattare direttamente un avvocato specializzato tramite l'email indicata sotto."
+⚠️ DIVIETI ASSOLUTI - NON DEVI MAI:
+- Nominare avvocati specifici o studi legali
+- Inventare nomi di professionisti
+- Suggerire di cercare altri professionisti
+- Menzionare "database", "ricerca", "altri studi"
+- Creare liste di professionisti consigliati
 
-REGOLE FERREE:
-- NON menzionare "database"
-- NON dire "cerca altri professionisti"
-- NON suggerire di "ampliare la ricerca"
-- NON parlare di "studi legali disponibili"
-- Tono: empatico, diretto, pratico
-
-Italiano, massimo 150 parole.`;
+Scrivi SOLO consigli generici pratici. Italiano professionale ma accessibile.`;
 
     const suggestionMessage = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 2048,
-      system: 'Sei un assistente legale AI che analizza problemi legali e suggerisce studi appropriati. Sei empatico, professionale e fornisci informazioni chiare.',
+      max_tokens: 1024,
+      system: 'Sei un assistente che fornisce informazioni legali generiche. NON suggerire mai nomi di avvocati o studi legali specifici. Dai solo consigli pratici generali.',
       messages: [
         {
           role: 'user',
