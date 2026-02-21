@@ -114,9 +114,12 @@ Scrivi in tono cordiale ma professionale, in italiano.`;
       ],
     });
 
-    const suggestions = suggestionMessage.content[0].type === 'text'
+    let suggestions = suggestionMessage.content[0].type === 'text'
       ? suggestionMessage.content[0].text
       : '';
+
+    // Aggiungi footer con email per pareri approfonditi
+    suggestions += '\n\n---\n\n💼 **Hai bisogno di un parere legale più approfondito?**\n\nPer una consulenza personalizzata e dettagliata sul tuo caso specifico, contattami direttamente via email:\n\n📧 **guido.motti@gmail.com**\n\nRiceverai una risposta professionale entro 24 ore.';
 
     return NextResponse.json({
       analysis,
