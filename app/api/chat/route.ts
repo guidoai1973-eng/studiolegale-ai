@@ -69,45 +69,35 @@ Rispondi SOLO con JSON valido, senza altre spiegazioni.`;
       console.error('Errore parsing JSON:', e);
     }
 
-    // Genera una risposta personalizzata con Claude
-    const suggestionPrompt = `Richiesta legale dell'utente: "${message}"
+    // Genera SOLO consigli pratici con Claude (nessun testo libero per evitare invenzioni)
+    const practicalAdvicePrompt = `Per questo caso legale: "${message}"
+Area: ${analysis.specializzazione_necessaria || 'non specificata'}
 
-Contesto identificato:
-- Tipo di causa: ${analysis.tipo_causa || 'non specificato'}
-- Area legale: ${analysis.specializzazione_necessaria || 'non specificata'}
-- Urgenza: ${analysis.urgenza || 'media'}
+Genera SOLO una lista di 3 azioni pratiche immediate (documentazione da raccogliere, aspetti da verificare).
+Formato: lista puntata, una frase per punto.
+NO introduzioni, NO nomi di avvocati, NO studi legali.`;
 
-COMPITO:
-Scrivi una risposta di 80-120 parole che:
-1. Riconosce empaticamente la situazione
-2. Spiega brevemente l'area legale coinvolta
-3. Suggerisci 2-3 azioni pratiche immediate (documenti da raccogliere, aspetti da verificare)
-4. Concludi: "Per assistenza professionale su questo caso, contatta direttamente l'avvocato tramite i contatti indicati sotto."
-
-⚠️ DIVIETI ASSOLUTI - NON DEVI MAI:
-- Nominare avvocati specifici o studi legali
-- Inventare nomi di professionisti
-- Suggerire di cercare altri professionisti
-- Menzionare "database", "ricerca", "altri studi"
-- Creare liste di professionisti consigliati
-
-Scrivi SOLO consigli generici pratici. Italiano professionale ma accessibile.`;
-
-    const suggestionMessage = await anthropic.messages.create({
+    const adviceMessage = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      system: 'Sei un assistente che fornisce informazioni legali generiche. NON suggerire mai nomi di avvocati o studi legali specifici. Dai solo consigli pratici generali.',
+      max_tokens: 300,
+      system: 'Genera SOLO liste di azioni pratiche. NO nomi di professionisti.',
       messages: [
         {
           role: 'user',
-          content: suggestionPrompt,
+          content: practicalAdvicePrompt,
         },
       ],
     });
 
-    let suggestions = suggestionMessage.content[0].type === 'text'
-      ? suggestionMessage.content[0].text
+    const practicalAdvice = adviceMessage.content[0].type === 'text'
+      ? adviceMessage.content[0].text
       : '';
+
+    // Template fisso per evitare che Claude inventi studi
+    let suggestions = `Comprendo la tua situazione e sono qui per aiutarti.\n\n`;
+    suggestions += `**Ho identificato che si tratta di:** ${analysis.specializzazione_necessaria || 'una questione legale'}\n\n`;
+    suggestions += `**Consigli pratici immediati:**\n${practicalAdvice}\n\n`;
+    suggestions += `Per assistenza legale professionale su questo caso specifico, contatta direttamente l'Avv. Guido Motti tramite i contatti indicati sotto.`;
 
     // Aggiungi footer con email per pareri approfonditi
     suggestions += '\n\n---\n\n⚖️ **Assistenza Legale Professionale - Avv. Guido Motti**\n\nPer un parere approfondito sul tuo caso, contatta direttamente:\n\n📧 **guido.motti@gmail.com**\n\n✅ Parere legale dettagliato e personalizzato\n✅ Analisi completa della situazione\n✅ Possibilità di fissare appuntamento\n\n💰 **€20 + IVA + 4% Cassa Avvocati**\n⏰ **Risposta entro 24 ore**';
