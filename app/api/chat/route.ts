@@ -119,7 +119,7 @@ Scrivi in tono cordiale ma professionale, in italiano.`;
       : '';
 
     // Aggiungi footer con email per pareri approfonditi
-    suggestions += '\n\n---\n\n💼 **Hai bisogno di un parere legale più approfondito?**\n\nPer una consulenza personalizzata e dettagliata sul tuo caso specifico, contattami direttamente via email:\n\n📧 **guido.motti@gmail.com**\n\nRiceverai una risposta professionale entro 24 ore.';
+    suggestions += '\n\n---\n\n💼 **Vuoi un Parere Legale Approfondito sul Tuo Caso?**\n\nContattami direttamente via email per ricevere:\n\n✅ **Parere legale dettagliato e personalizzato**\n✅ **Analisi completa della tua situazione**\n✅ **Possibilità di fissare un appuntamento**\n\n📧 **Email: guido.motti@gmail.com**\n\n💰 **Costo: €20 + IVA + 4% Cassa Avvocati**\n\n⏰ Risposta garantita entro 24 ore.';
 
     return NextResponse.json({
       analysis,
