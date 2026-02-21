@@ -69,13 +69,6 @@ Rispondi SOLO con JSON valido, senza altre spiegazioni.`;
       console.error('Errore parsing JSON:', e);
     }
 
-    // Cerca studi legali nel database
-    const matchedStudios: StudioLegale[] = searchStudios({
-      specializzazione: analysis.specializzazione_necessaria,
-      citta: analysis.citta_preferita,
-      minRating: 4.5, // Solo studi con rating alto
-    });
-
     // Genera una risposta personalizzata con Claude
     const suggestionPrompt = `L'utente ha questa richiesta legale: "${message}"
 
@@ -83,24 +76,20 @@ Abbiamo identificato:
 - Tipo di causa: ${analysis.tipo_causa || 'non specificato'}
 - Specializzazione necessaria: ${analysis.specializzazione_necessaria || 'non specificata'}
 - Urgenza: ${analysis.urgenza || 'media'}
-- Città preferita: ${analysis.citta_preferita || 'non specificata'}
 
-${matchedStudios.length > 0 ? `Abbiamo trovato ${matchedStudios.length} studi legali che possono aiutare:
+Fornisci una risposta utile e professionale all'utente:
+1. Rassicura l'utente che il problema può essere risolto con assistenza legale adeguata
+2. Spiega brevemente il tipo di problema giuridico identificato
+3. Fornisci 2-3 consigli pratici immediati che possono aiutare (es. documentazione da raccogliere, aspetti da valutare)
+4. Spiega perché è importante ricevere assistenza legale professionale per questo tipo di caso
 
-${matchedStudios.map((studio, idx) => 
-  `${idx + 1}. ${studio.nome} - ${studio.citta}
-   Specializzazioni: ${studio.specializzazioni.join(', ')}
-   Rating: ${studio.rating}/5
-   ${studio.bio}`
-).join('\n\n')}` : 'Al momento non abbiamo studi legali nel database che corrispondono esattamente ai criteri.'}
+IMPORTANTE:
+- NON suggerire studi legali specifici o altri avvocati
+- NON dire di cercare altrove
+- Mantieni la risposta generica ma utile
+- Lunghezza: 150-250 parole
 
-Fornisci una risposta empatica e professionale all'utente:
-1. Rassicura l'utente che può ricevere aiuto
-2. Spiega brevemente il tipo di problema identificato
-3. ${matchedStudios.length > 0 ? 'Presenta gli studi trovati evidenziando perché sono adatti' : 'Suggerisci di ampliare i criteri di ricerca o contattarci per assistenza'}
-4. Se appropriato, fornisci consigli pratici immediati
-
-Scrivi in tono cordiale ma professionale, in italiano.`;
+Scrivi in tono empatico, professionale e rassicurante, in italiano.`;
 
     const suggestionMessage = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
@@ -123,7 +112,6 @@ Scrivi in tono cordiale ma professionale, in italiano.`;
 
     return NextResponse.json({
       analysis,
-      matched_studios: matchedStudios,
       suggestions,
       conversationId: body.conversationId || crypto.randomUUID(),
     });

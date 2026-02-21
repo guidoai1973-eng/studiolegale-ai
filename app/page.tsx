@@ -188,77 +188,7 @@ export default function Home() {
                         </div>
                       </div>
 
-{/* Bottone parere rimosso - clienti contattano direttamente via email */}
-                      
-                      {/* Studios Cards */}
-                      {message.studios && message.studios.length > 0 && (
-                        <div className="mt-6 space-y-4">
-                          <h4 className="text-lg font-bold text-gray-900 mb-4">
-                            Studi Legali Consigliati:
-                          </h4>
-                          {message.studios.map((studio) => (
-                            <div
-                              key={studio.id}
-                              className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-purple-600"
-                            >
-                              <div className="flex justify-between items-start mb-3">
-                                <div>
-                                  <h5 className="text-xl font-bold text-gray-900">
-                                    {studio.nome}
-                                  </h5>
-                                  <p className="text-gray-600">
-                                    📍 {studio.citta}, {studio.provincia}
-                                  </p>
-                                </div>
-                                <div className="flex items-center bg-yellow-50 px-3 py-1 rounded-full">
-                                  <span className="text-yellow-600 font-bold">
-                                    ⭐ {studio.rating}
-                                  </span>
-                                </div>
-                              </div>
-                              
-                              <div className="mb-3">
-                                <p className="text-sm font-semibold text-purple-700 mb-1">
-                                  Specializzazioni:
-                                </p>
-                                <div className="flex flex-wrap gap-2">
-                                  {studio.specializzazioni.map((spec, idx) => (
-                                    <span
-                                      key={idx}
-                                      className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm"
-                                    >
-                                      {spec}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                              
-                              <p className="text-gray-700 text-sm mb-4">{studio.bio}</p>
-                              
-                              <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-4">
-                                <a href={`tel:${studio.telefono}`} className="flex items-center hover:text-purple-600">
-                                  📞 {studio.telefono}
-                                </a>
-                                <a href={`mailto:${studio.email}`} className="flex items-center hover:text-purple-600">
-                                  ✉️ {studio.email}
-                                </a>
-                                <a
-                                  href={studio.sito_web}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center hover:text-purple-600"
-                                >
-                                  🌐 Sito web
-                                </a>
-                              </div>
-                              
-                              <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold py-3 rounded-lg hover:shadow-lg transition-shadow">
-                                Contatta Studio
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+{/* Tutti i clienti vengono indirizzati a Guido Motti via email */}
                     </div>
                   )}
                 </div>
