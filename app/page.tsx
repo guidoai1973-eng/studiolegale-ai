@@ -24,8 +24,46 @@ interface Message {
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [lastAnalysis, setLastAnalysis] = useState<any>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    if (!userEmail || !userEmail.includes('@')) {
+      alert('Inserisci un indirizzo email valido per ricevere il parere PDF');
+      return;
+    }
+
+    setCheckoutLoading(true);
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          conversationId,
+          userEmail,
+          analysis: lastAnalysis,
+          suggestions: messages[messages.length - 1]?.content || '',
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('URL checkout non ricevuto');
+      }
+    } catch (error) {
+      console.error('Errore checkout:', error);
+      alert('Errore durante il checkout. Riprova.');
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +98,11 @@ export default function Home() {
       // Salva conversationId per messaggi successivi
       if (data.conversationId) {
         setConversationId(data.conversationId);
+      }
+
+      // Salva analysis per checkout
+      if (data.analysis) {
+        setLastAnalysis(data.analysis);
       }
 
       // Aggiungi risposta AI
@@ -187,6 +230,51 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
+
+                      {/* PDF Report Button */}
+                      {index === messages.length - 1 && !isLoading && (
+                        <div className="mt-4 max-w-2xl">
+                          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border-2 border-green-200">
+                            <div className="flex items-start space-x-4">
+                              <div className="text-4xl">📄</div>
+                              <div className="flex-1">
+                                <h4 className="font-bold text-lg text-gray-900 mb-2">
+                                  Vuoi un Parere Legale Dettagliato?
+                                </h4>
+                                <p className="text-gray-700 text-sm mb-4">
+                                  Ricevi un report PDF professionale con:
+                                </p>
+                                <ul className="text-sm text-gray-600 mb-4 space-y-1">
+                                  <li>✅ Inquadramento giuridico completo</li>
+                                  <li>✅ Analisi approfondita del caso</li>
+                                  <li>✅ Strategie legali consigliate</li>
+                                  <li>✅ Passi successivi da intraprendere</li>
+                                  <li>✅ Domande per l'avvocato</li>
+                                </ul>
+                                <button
+                                  onClick={handleCheckout}
+                                  disabled={checkoutLoading || !userEmail}
+                                  className="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                                >
+                                  {checkoutLoading ? (
+                                    <span>Caricamento...</span>
+                                  ) : (
+                                    <>
+                                      <span>📄 Ottieni Parere PDF</span>
+                                      <span className="bg-white/20 px-3 py-1 rounded-full">€10</span>
+                                    </>
+                                  )}
+                                </button>
+                                {!userEmail && (
+                                  <p className="text-xs text-red-600 mt-2 text-center">
+                                    ⚠️ Inserisci la tua email sopra per procedere
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       
                       {/* Studios Cards */}
                       {message.studios && message.studios.length > 0 && (
@@ -282,13 +370,22 @@ export default function Home() {
             </div>
 
             {/* Input Area */}
-            <div className="p-6 bg-white border-t">
+            <div className="p-6 bg-white border-t space-y-4">
+              <div className="flex space-x-4">
+                <input
+                  type="email"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  placeholder="La tua email (per ricevere il parere PDF)"
+                  className="flex-1 px-6 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
               <form onSubmit={handleSubmit} className="flex space-x-4">
                 <input
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Descrivi la tua situazione..."
+                  placeholder="Descrivi la tua situazione legale..."
                   disabled={isLoading}
                   className="flex-1 px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-lg disabled:bg-gray-100"
                 />
@@ -297,10 +394,10 @@ export default function Home() {
                   disabled={isLoading || !inputMessage.trim()}
                   className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? 'Invio...' : 'Invia'}
+                  {isLoading ? 'Invio...' : 'Analizza'}
                 </button>
               </form>
-              <p className="text-xs text-gray-500 mt-3 text-center">
+              <p className="text-xs text-gray-500 text-center">
                 🔒 Le tue informazioni sono protette e confidenziali
               </p>
             </div>
