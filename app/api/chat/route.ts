@@ -72,24 +72,27 @@ Rispondi SOLO con JSON valido, senza altre spiegazioni.`;
     // Genera una risposta personalizzata con Claude
     const suggestionPrompt = `L'utente ha questa richiesta legale: "${message}"
 
-Abbiamo identificato:
+Ho identificato:
 - Tipo di causa: ${analysis.tipo_causa || 'non specificato'}
 - Specializzazione necessaria: ${analysis.specializzazione_necessaria || 'non specificata'}
 - Urgenza: ${analysis.urgenza || 'media'}
 
-Fornisci una risposta utile e professionale all'utente:
-1. Rassicura l'utente che il problema può essere risolto con assistenza legale adeguata
-2. Spiega brevemente il tipo di problema giuridico identificato
-3. Fornisci 2-3 consigli pratici immediati che possono aiutare (es. documentazione da raccogliere, aspetti da valutare)
-4. Spiega perché è importante ricevere assistenza legale professionale per questo tipo di caso
+ISTRUZIONI:
+Scrivi una risposta breve (100-150 parole) che:
 
-IMPORTANTE:
-- NON suggerire studi legali specifici o altri avvocati
-- NON dire di cercare altrove
-- Mantieni la risposta generica ma utile
-- Lunghezza: 150-250 parole
+1. Riconosce il problema dell'utente con empatia
+2. Spiega in 1-2 frasi il tipo di questione legale
+3. Fornisci 2-3 consigli pratici immediati (es. "Raccogli: certificati, documenti, contratti" oppure "Verifica se hai: testimoni, foto, email rilevanti")
+4. Concludi con: "Per ricevere assistenza legale professionale su questo caso, ti consiglio di contattare direttamente un avvocato specializzato tramite l'email indicata sotto."
 
-Scrivi in tono empatico, professionale e rassicurante, in italiano.`;
+REGOLE FERREE:
+- NON menzionare "database"
+- NON dire "cerca altri professionisti"
+- NON suggerire di "ampliare la ricerca"
+- NON parlare di "studi legali disponibili"
+- Tono: empatico, diretto, pratico
+
+Italiano, massimo 150 parole.`;
 
     const suggestionMessage = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
@@ -108,7 +111,7 @@ Scrivi in tono empatico, professionale e rassicurante, in italiano.`;
       : '';
 
     // Aggiungi footer con email per pareri approfonditi
-    suggestions += '\n\n---\n\n💼 **Vuoi un Parere Legale Approfondito sul Tuo Caso?**\n\nContattami direttamente via email per ricevere:\n\n✅ **Parere legale dettagliato e personalizzato**\n✅ **Analisi completa della tua situazione**\n✅ **Possibilità di fissare un appuntamento**\n\n📧 **Email: guido.motti@gmail.com**\n\n💰 **Costo: €20 + IVA + 4% Cassa Avvocati**\n\n⏰ Risposta garantita entro 24 ore.';
+    suggestions += '\n\n---\n\n⚖️ **Assistenza Legale Professionale - Avv. Guido Motti**\n\nPer un parere approfondito sul tuo caso, contatta direttamente:\n\n📧 **guido.motti@gmail.com**\n\n✅ Parere legale dettagliato e personalizzato\n✅ Analisi completa della situazione\n✅ Possibilità di fissare appuntamento\n\n💰 **€20 + IVA + 4% Cassa Avvocati**\n⏰ **Risposta entro 24 ore**';
 
     return NextResponse.json({
       analysis,

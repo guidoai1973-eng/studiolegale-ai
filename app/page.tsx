@@ -109,14 +109,14 @@ export default function Home() {
             🤖 Powered by Claude AI
           </div>
           <h2 className="text-6xl font-bold text-gray-900 mb-6">
-            Trova l'Avvocato<br />
+            Studio Legale<br />
             <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              Perfetto per Te
+              Avv. Guido Motti
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            L'intelligenza artificiale analizza il tuo caso e ti suggerisce gli studi legali 
-            più adatti alle tue esigenze specifiche.
+            L'intelligenza artificiale analizza il tuo problema legale e ti fornisce 
+            una prima valutazione utile. Assistenza professionale garantita.
           </p>
         </div>
 
@@ -142,8 +142,8 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                       <p className="text-gray-800 leading-relaxed">
-                        Ciao! Sono il tuo assistente legale AI. Descrivimi la tua situazione 
-                        e ti aiuterò a trovare l'avvocato giusto. Ad esempio:
+                        Ciao! Sono l'assistente AI dello Studio Legale dell'Avv. Guido Motti. Descrivimi la tua situazione legale 
+                        e ti fornirò una prima analisi utile. Ad esempio:
                       </p>
                       <ul className="mt-4 space-y-2 text-gray-600 text-sm">
                         <li className="flex items-start">
@@ -252,20 +252,20 @@ export default function Home() {
           </div>
           <div className="text-center p-6">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">🎯</span>
+              <span className="text-3xl">⚖️</span>
             </div>
-            <h3 className="text-xl font-bold mb-2">Matching Perfetto</h3>
+            <h3 className="text-xl font-bold mb-2">Assistenza Professionale</h3>
             <p className="text-gray-600">
-              Ti suggeriamo solo gli studi più adatti al tuo caso specifico
+              Consulenza legale diretta con l'Avv. Guido Motti per il tuo caso specifico
             </p>
           </div>
           <div className="text-center p-6">
             <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">📄</span>
+              <span className="text-3xl">⏰</span>
             </div>
-            <h3 className="text-xl font-bold mb-2">Report Dettagliato</h3>
+            <h3 className="text-xl font-bold mb-2">Risposta Rapida</h3>
             <p className="text-gray-600">
-              Ricevi un PDF con domande chiave da fare durante la consultazione
+              Parere legale dettagliato entro 24 ore dalla richiesta
             </p>
           </div>
         </div>
