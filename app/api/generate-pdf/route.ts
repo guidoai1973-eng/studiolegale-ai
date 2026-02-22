@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+// Lazy initialization
+function getAnthropic() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    throw new Error('ANTHROPIC_API_KEY non configurata');
+  }
+  return new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,6 +63,7 @@ IMPORTANTE:
 DISCLAIMER FINALE:
 "Questo parere è stato generato da un'intelligenza artificiale e ha valore puramente informativo. Non costituisce consulenza legale professionale. Per una valutazione definitiva del caso, si consiglia di consultare un avvocato specializzato."`;
 
+    const anthropic = getAnthropic();
     const parereMessage = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4096,
