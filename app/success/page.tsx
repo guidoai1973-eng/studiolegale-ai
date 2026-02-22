@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [parere, setParere] = useState<string>('');
@@ -115,5 +115,21 @@ export default function SuccessPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+// Wrap with Suspense to fix Next.js useSearchParams() SSR error
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-green-600 mx-auto mb-4"></div>
+          <p className="text-xl text-gray-700">Caricamento...</p>
+        </div>
+      </main>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 }
