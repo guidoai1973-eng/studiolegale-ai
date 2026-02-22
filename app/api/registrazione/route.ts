@@ -8,7 +8,7 @@ const EMAIL_TO = 'guido.motti@gmail.com';
 
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
-// StudioLegale-AI.it - Registrazione Partner Studios - Updated 2026-02-22 12:30
+// StudioLegale-AI.it - Registrazione Partner Studios - Updated 2026-02-22 18:50 - Remove file ops
 export async function POST(request: Request) {
   try {
     console.log('=== INIZIO REGISTRAZIONE STUDIOLEGALE-AI ===');
