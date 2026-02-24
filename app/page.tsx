@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface StudioLegale {
   id: number;
@@ -96,11 +97,57 @@ export default function Home() {
             </h1>
             <p className="text-gray-600 mt-1">Assistente legale intelligente</p>
           </div>
-          <button className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-            Accedi
-          </button>
+          <div className="flex gap-4">
+            <Link href="/templates">
+              <button className="px-6 py-2 text-purple-600 hover:bg-purple-50 rounded-lg font-semibold">
+                Template
+              </button>
+            </Link>
+            <Link href="/pricing">
+              <button className="px-6 py-2 text-purple-600 hover:bg-purple-50 rounded-lg font-semibold">
+                Pricing
+              </button>
+            </Link>
+            <Link href="/dashboard">
+              <button className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                Dashboard
+              </button>
+            </Link>
+          </div>
         </div>
       </header>
+
+      {/* Disclaimer Deontologico Prominente */}
+      <section className="max-w-7xl mx-auto px-4 pt-8 pb-4">
+        <div className="bg-yellow-50 border-4 border-yellow-400 rounded-xl shadow-2xl p-8">
+          <div className="flex items-start space-x-6">
+            <div className="text-6xl flex-shrink-0">⚖️</div>
+            <div>
+              <h3 className="text-2xl font-bold text-yellow-900 mb-4">
+                ⚠️ AVVISO IMPORTANTE - DISCLAIMER DEONTOLOGICO
+              </h3>
+              <div className="space-y-3 text-yellow-800 leading-relaxed">
+                <p className="font-semibold text-lg">
+                  I servizi offerti da questo sito hanno <strong>ESCLUSIVO VALORE INFORMATIVO E DIVULGATIVO</strong>.
+                </p>
+                <p>
+                  Le analisi generate dall'intelligenza artificiale e i template legali <strong>NON costituiscono 
+                  consulenza legale professionale</strong>, né pareri legali vincolanti, né possono in alcun modo 
+                  sostituire l'assistenza diretta di un avvocato iscritto all'Ordine degli Avvocati.
+                </p>
+                <p>
+                  Ogni situazione legale è unica e richiede una valutazione personalizzata da parte di un 
+                  professionista abilitato. Si raccomanda vivamente di consultare un avvocato prima di 
+                  intraprendere qualsiasi azione legale o di utilizzare i documenti generati.
+                </p>
+                <p className="font-semibold">
+                  L'utilizzo dei servizi e dei documenti è a esclusivo rischio e responsabilità dell'utente.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 py-16">
