@@ -22,22 +22,19 @@ export async function POST(request: NextRequest) {
 • Annota una cronologia degli eventi principali
 • Prepara domande specifiche da porre durante la consulenza
 
-**Per assistenza legale professionale su questo caso specifico**, contatta direttamente l'**Avv. Guido Motti** tramite i contatti indicati sotto.
-
 ---
 
-⚖️ **Assistenza Legale Professionale - Avv. Guido Motti**
+⚖️ **Servizi di Assistenza Legale Disponibili**
 
-Per un parere approfondito sul tuo caso, contatta direttamente:
+StudioLegale-AI offre diversi servizi professionali per supportarti:
 
-📧 **guido.motti@gmail.com**
+✅ **Analisi AI del caso** con report professionale completo
+✅ **Template legali** personalizzabili per le tue esigenze
+✅ **Bundle convenienza** per più documenti
 
-✅ Parere legale dettagliato e personalizzato
-✅ Analisi completa della situazione
-✅ Possibilità di fissare appuntamento
+👉 **[Scopri tutti i servizi e i prezzi](/pricing)**
 
-💰 **€20 + IVA + 4% Cassa Avvocati**
-⏰ **Risposta entro 24 ore**`;
+Per assistenza personalizzata, contatta: **guido.motti@gmail.com**`;
 
     return NextResponse.json({
       suggestions,
