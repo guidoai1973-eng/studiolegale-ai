@@ -18,18 +18,20 @@ interface PricingTier {
 const pricingTiers: PricingTier[] = [
   {
     id: 'analisi-ai',
-    nome: 'Analisi AI',
-    descrizione: 'Analisi professionale del tuo caso legale',
-    prezzo: 19.90,
+    nome: 'Analisi AI Professionale',
+    descrizione: 'Analisi completa del tuo caso legale con accessori',
+    prezzo: 50.00,
     icon: '🤖',
     features: [
       'Conversazione guidata con AI',
       'Analisi approfondita del caso',
       'Identificazione problematiche legali',
-      'Suggerimenti normativi',
-      'Report PDF dettagliato',
+      'Suggerimenti normativi + giurisprudenza',
+      'Report PDF dettagliato (10-15 pagine)',
+      '✨ BONUS: 1 template gratuito a scelta',
+      '✨ BONUS: Follow-up via email entro 7 giorni',
       'Risposta entro 2 ore',
-      'Valida per 30 giorni'
+      'Valida per 60 giorni'
     ],
     cta: 'Richiedi Analisi'
   },

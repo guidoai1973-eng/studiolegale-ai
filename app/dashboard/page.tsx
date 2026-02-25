@@ -45,7 +45,7 @@ export default function DashboardPage() {
           date: '2026-02-23',
           type: 'analisi',
           nome: 'Analisi AI - Controversia Condominiale',
-          prezzo: 19.90,
+          prezzo: 50.00,
           status: 'completed',
           pdfUrl: '/downloads/analisi-123.pdf'
         },

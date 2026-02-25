@@ -14,9 +14,9 @@ function getStripe() {
 // Price IDs mapping per i vari tier
 const PRICE_CONFIG: Record<string, { amount: number; name: string; description: string }> = {
   'analisi-ai': {
-    amount: 1990,
-    name: 'Analisi AI del Caso Legale',
-    description: 'Report PDF dettagliato con analisi approfondita e suggerimenti pratici'
+    amount: 5000,
+    name: 'Analisi AI Professionale del Caso Legale',
+    description: 'Report PDF completo (10-15 pagine) + 1 template gratuito + follow-up email entro 7 giorni'
   },
   'template-singolo': {
     amount: 990,
